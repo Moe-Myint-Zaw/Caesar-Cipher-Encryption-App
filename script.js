@@ -4,7 +4,7 @@ function processText(isEncrypting) {
   let output = '';
 
   if (isNaN(shift)) {
-    document.getElementById('output').innerText = "Please enter a valid number for shift.";
+    showToast("Please enter a valid number for shift.");
     return;
   }
 
@@ -22,13 +22,23 @@ function copyToClipboard() {
   const outputText = document.getElementById('output').innerText;
 
   if (!outputText) {
-    alert("Nothing to copy!");
+    showToast("Nothing to copy!");
     return;
   }
 
   navigator.clipboard.writeText(outputText).then(() => {
-    alert("Output copied to clipboard!");
+    showToast("Output copied to clipboard!");
   }).catch(err => {
-    alert("Failed to copy text: " + err);
+    showToast("Failed to copy text: " + err);
   });
+}
+
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.innerText = message;
+  toast.className = "toast show";
+
+  setTimeout(() => {
+    toast.className = "toast";
+  }, 3000); // Hide after 3 seconds
 }
